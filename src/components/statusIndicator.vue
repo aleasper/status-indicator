@@ -7,13 +7,12 @@
       <span
           v-for="(data, i) in indicatedData.data"
           :key="i"
-          class="status-indicator__value-section"
+          class="status-indicator__segment"
           :style="{'--flex-grow': `${data.value}`}"
       >
         <colored-block
             :color="data.color"
         >
-
         </colored-block>
       </span>
     </span>
@@ -56,6 +55,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @use "src/consts/colors" as colors;
+@use "src/consts/layout_consts" as consts;
 
 .status-indicator {
   display: flex;
@@ -78,10 +78,11 @@ export default defineComponent({
     flex: 1 1;
   }
 
-  &__value-section {
+  &__segment {
     flex-grow: var(--flex-grow);
     display: block;
     height: 100%;
+    min-width: consts.$min-segment-width;
     //flex: 1 1;
   }
 }

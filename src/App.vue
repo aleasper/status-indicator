@@ -37,6 +37,11 @@ export default defineComponent({
           value: 12,
           color: '#ef0000'
         },
+        {
+          valueName: 'no-data',
+          value: 0,
+          color: '#8d8d8d'
+        },
       ]
     } as IndicatedData
   })
