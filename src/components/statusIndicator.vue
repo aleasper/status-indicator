@@ -19,13 +19,13 @@
             :class="['status-indicator__hint', 'status-indicator__hint_bottom',
             {'status-indicator__hint_reflect': i+1 > indicatedData.data.length  / 2}]"
         >
-          hint bottom
+          {{data.valueName}}
         </span>
         <span
             :class="['status-indicator__hint', 'status-indicator__hint_top',
             {'status-indicator__hint_reflect': i+1 > indicatedData.data.length  / 2}]"
         >
-          hint top
+         {{data.value}}
         </span>
       </span>
     </span>
@@ -122,8 +122,13 @@ export default defineComponent({
 
   &__hint {
     position: absolute;
-    //left: 0;
     display: none;
+    height: 1.375rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    width: calc(100%);
 
     &_bottom {
       bottom: 0;
@@ -134,6 +139,7 @@ export default defineComponent({
 
     &_reflect {
       right: 0;
+      text-align: right;
     }
   }
 }
