@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="width: 300px">
+    <div style="width: 400px">
       <status-indicator
           :indicated-data="indicatedData"
       ></status-indicator>
@@ -39,7 +39,7 @@ export default defineComponent({
         },
         {
           valueName: 'no-data',
-          value: 0,
+          value: 2,
           color: '#8d8d8d'
         },
       ]

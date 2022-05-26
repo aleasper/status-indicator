@@ -11,9 +11,22 @@
           :style="{'--flex-grow': `${data.value}`}"
       >
         <colored-block
+            class="status-indicator__color-block"
             :color="data.color"
         >
         </colored-block>
+        <span
+            :class="['status-indicator__hint', 'status-indicator__hint_bottom',
+            {'status-indicator__hint_reflect': i+1 > indicatedData.data.length  / 2}]"
+        >
+          hint bottom
+        </span>
+        <span
+            :class="['status-indicator__hint', 'status-indicator__hint_top',
+            {'status-indicator__hint_reflect': i+1 > indicatedData.data.length  / 2}]"
+        >
+          hint top
+        </span>
       </span>
     </span>
   </div>
@@ -62,6 +75,7 @@ export default defineComponent({
   gap: 1rem;
   align-items: center;
   width: 100%;
+  height: 3.625rem;
 
   &__title {
     color: colors.$basic-text-color;
@@ -73,17 +87,54 @@ export default defineComponent({
     display: flex;
     gap: 1px; // or 0.0625rem but I think this should be always 1px
     border-radius: 4px;
-    height: 0.5rem;
     overflow: hidden;
     flex: 1 1;
+    height: 100%;
+
+    align-items: center;
+    position: relative;
+
+    & span:first-child .status-indicator__color-block {
+      border-radius: 4px 0 0 4px;
+    }
+    & span:last-child .status-indicator__color-block {
+      border-radius: 0 4px 4px 0;
+    }
   }
 
   &__segment {
     flex-grow: var(--flex-grow);
-    display: block;
+    display: flex;
+    align-items: center;
     height: 100%;
     min-width: consts.$min-segment-width;
-    //flex: 1 1;
+    //position: relative;
+
+    &:hover .status-indicator__hint {
+      display: block;
+    }
+  }
+
+  &__color-block {
+    height: 0.5rem;
+    width: 100%;
+  }
+
+  &__hint {
+    position: absolute;
+    //left: 0;
+    display: none;
+
+    &_bottom {
+      bottom: 0;
+    }
+    &_top {
+      top: 0;
+    }
+
+    &_reflect {
+      right: 0;
+    }
   }
 }
 </style>
