@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <div style="width: 400px">
+  <div class="main-playground">
       <status-indicator
-          :indicated-data="indicatedData"
+          :indicated-data="indicatedData_1"
       ></status-indicator>
-    </div>
+    <status-indicator
+        :indicated-data="indicatedData_2"
+    ></status-indicator>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import StatusIndicator from "@/components/statusIndicator.vue";
-import {IndicatedData} from "@/entities/indicatedData";
+import {test_data_1, test_data_2} from "@/test_data/test_data";
 
 export default defineComponent({
   name: 'App',
@@ -19,31 +20,8 @@ export default defineComponent({
     StatusIndicator
   },
   data: () => ({
-    indicatedData: {
-      title: 'Risk of Loss',
-      data: [
-        {
-          valueName: 'low',
-          value: 20,
-          color: '#18ef00'
-        },
-        {
-          valueName: 'medium',
-          value: 33,
-          color: '#ffe01b'
-        },
-        {
-          valueName: 'high',
-          value: 12,
-          color: '#ef0000'
-        },
-        {
-          valueName: 'no-data',
-          value: 2,
-          color: '#8d8d8d'
-        },
-      ]
-    } as IndicatedData
+    indicatedData_1:  test_data_1,
+    indicatedData_2:  test_data_2
   })
 });
 </script>
@@ -56,10 +34,17 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 60px;
 
   color: colors.$basic-text-color;
   line-height: 1.5rem;
   font-size: 16px;
+}
+
+.main-playground {
+  width: 100%;
+  column-gap: 2.5rem;
+  row-gap: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 </style>

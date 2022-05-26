@@ -5,7 +5,7 @@
     </span>
     <span class="status-indicator__indicator">
       <span
-          v-for="(data, i) in indicatedData.data"
+          v-for="(data, i) in indicatedDataPerPercent"
           :key="i"
           class="status-indicator__segment"
           :style="{'--flex-grow': `${data.value}`}"
@@ -16,16 +16,16 @@
         >
         </colored-block>
         <span
-            :class="['status-indicator__hint', 'status-indicator__hint_bottom',
-            {'status-indicator__hint_reflect': i+1 > indicatedData.data.length  / 2}]"
+            :class="['status-indicator__hint', 'status-indicator__hint_top',
+            {'status-indicator__hint_reflect': i+1 > indicatedDataPerPercent.length  / 2}]"
         >
-          {{data.valueName}}
+         {{data.valueName}} — {{data.valuePercents}}%
         </span>
         <span
-            :class="['status-indicator__hint', 'status-indicator__hint_top',
-            {'status-indicator__hint_reflect': i+1 > indicatedData.data.length  / 2}]"
+            :class="['status-indicator__hint', 'status-indicator__hint_bottom',
+            {'status-indicator__hint_reflect': i+1 > indicatedDataPerPercent.length  / 2}]"
         >
-         {{data.value}}
+          {{data.value}} {{data.valueMeasure}}
         </span>
       </span>
     </span>
@@ -37,6 +37,10 @@ import {computed, defineComponent, PropType} from "vue";
 import ColoredBlock from "@/components/coloredBlock.vue";
 import {IndicatedData, IndicatedDataValue} from "@/entities/indicatedData";
 
+interface IndicatedDataPerPercent extends IndicatedDataValue {
+  valuePercents: number
+}
+
 export default defineComponent({
   name: "statusIndicator",
   components: {ColoredBlock},
@@ -47,20 +51,21 @@ export default defineComponent({
     }
   },
   setup(props) {
-    // const valuesSum = computed( () => props.indicatedData.data.reduce((acc, el) => {
-    //   acc += el.value;
-    //   return acc;
-    // }, 0));
-    // const indicatedDataPerPercent = computed(() => props.indicatedData.data.map((el) => {
-    //   return {
-    //     valueName: el.valueName,
-    //     value: el.value / (valuesSum.value / 100),
-    //     color: el.color
-    //   } as IndicatedDataValue;
-    // }) as IndicatedDataValue[]);
+    const valuesSum = computed( () => props.indicatedData.data.reduce((acc, el) => {
+      acc += el.value;
+      return acc;
+    }, 0));
+    const indicatedDataPerPercent = computed(() => props.indicatedData.data.map((el) => {
+      return {
+        valueName: el.valueName,
+        valuePercents: Math.round(el.value / (valuesSum.value / 100)),
+        valueMeasure: el.valueMeasure,
+        value: el.value,
+        color: el.color
+      } as IndicatedDataPerPercent;
+    }) as IndicatedDataPerPercent[]);
     return {
-      // valuesSum,
-      // indicatedDataPerPercent
+      indicatedDataPerPercent
     }
   }
 });
@@ -108,7 +113,7 @@ export default defineComponent({
     align-items: center;
     height: 100%;
     min-width: consts.$min-segment-width;
-    //position: relative;
+    cursor: pointer;
 
     &:hover .status-indicator__hint {
       display: block;

@@ -1,5 +1,6 @@
 export interface IndicatedDataValue {
-    valueName: string
+    valueName: string,
+    valueMeasure: string,
     value: number,
     color: string
 }
