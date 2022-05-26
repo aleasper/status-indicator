@@ -7,8 +7,11 @@
       <span
           v-for="(data, i) in indicatedDataPerPercent"
           :key="i"
-          class="status-indicator__segment"
+          :class="['status-indicator__segment',
+           {'status-indicator__segment_transparent': hoveredItemIndex !== null && hoveredItemIndex !== i}]"
           :style="{'--flex-grow': `${data.value}`}"
+          @mouseover.stop.prevent="handleMouseover(i)"
+          @mouseleave.stop.prevent="handleMouseleave(i)"
       >
         <colored-block
             class="status-indicator__color-block"
@@ -33,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from "vue";
+import {computed, defineComponent, PropType, ref, ToRef} from "vue";
 import ColoredBlock from "@/components/coloredBlock.vue";
 import {IndicatedData, IndicatedDataValue} from "@/entities/indicatedData";
 
@@ -64,8 +67,24 @@ export default defineComponent({
         color: el.color
       } as IndicatedDataPerPercent;
     }) as IndicatedDataPerPercent[]);
+
+    const hoveredItemIndex: ToRef<null|number> = ref(null);
+
+    const handleMouseover = (i: number) => {
+      hoveredItemIndex.value = i;
+    }
+    const handleMouseleave = (i: number) => {
+      if (i === hoveredItemIndex.value) {
+        hoveredItemIndex.value = null;
+      }
+    }
+
     return {
-      indicatedDataPerPercent
+      indicatedDataPerPercent,
+      hoveredItemIndex,
+
+      handleMouseover,
+      handleMouseleave
     }
   }
 });
@@ -117,6 +136,9 @@ export default defineComponent({
 
     &:hover .status-indicator__hint {
       display: block;
+    }
+    &_transparent {
+      opacity: 0.08;
     }
   }
 
