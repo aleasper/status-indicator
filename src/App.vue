@@ -29,8 +29,10 @@ export default defineComponent({
 <style lang="scss">
 @use "src/consts/colors" as colors;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif; // Lab Grotesque according to import from googleapis
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -41,10 +43,12 @@ export default defineComponent({
 }
 
 .main-playground {
+  padding: 2.5rem;
   width: 100%;
   column-gap: 2.5rem;
   row-gap: 2.5rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  box-sizing: border-box;
 }
 </style>

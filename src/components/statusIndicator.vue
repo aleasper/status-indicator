@@ -15,14 +15,15 @@
       >
         <colored-block
             class="status-indicator__color-block"
-            :color="data.color"
+            :color="data.valueName || hoveredItemIndex === i ? data.color: notDataDefaultColor"
         >
         </colored-block>
         <span
             :class="['status-indicator__hint', 'status-indicator__hint_top',
             {'status-indicator__hint_reflect': i+1 > indicatedDataPerPercent.length  / 2}]"
+            :style="{'--font-color': data.color}"
         >
-         {{data.valueName}} — {{data.valuePercents}}%
+         {{data.valueName || noDataValueName}} — {{data.valuePercents}}%
         </span>
         <span
             :class="['status-indicator__hint', 'status-indicator__hint_bottom',
@@ -38,7 +39,8 @@
 <script lang="ts">
 import {computed, defineComponent, PropType, ref, ToRef} from "vue";
 import ColoredBlock from "@/components/coloredBlock.vue";
-import {IndicatedData, IndicatedDataValue} from "@/entities/indicatedData";
+import {IndicatedData, IndicatedDataValue} from "@/entities/indicatedData"
+import {defaultNotRatedSegmentColor, defaultValueName} from "@/consts/ui_consts.ts";
 
 interface IndicatedDataPerPercent extends IndicatedDataValue {
   valuePercents: number
@@ -54,6 +56,8 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const noDataValueName = defaultValueName;
+    const notDataDefaultColor = defaultNotRatedSegmentColor;
     const valuesSum = computed( () => props.indicatedData.data.reduce((acc, el) => {
       acc += el.value;
       return acc;
@@ -82,6 +86,7 @@ export default defineComponent({
     return {
       indicatedDataPerPercent,
       hoveredItemIndex,
+      noDataValueName, notDataDefaultColor,
 
       handleMouseover,
       handleMouseleave
@@ -162,6 +167,8 @@ export default defineComponent({
     }
     &_top {
       top: 0;
+      font-weight: 700;
+      color: var(--font-color);
     }
 
     &_reflect {

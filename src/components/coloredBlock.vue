@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, PropType} from "vue";
 
 export default defineComponent({
   name: "coloredBlock",
   props: {
     color: {
-      type: String,
+      type: String as PropType<string>,
       required: true
-    }
+    },
   },
   setup(props) {
     const cssProp = computed(() => ({
@@ -27,6 +27,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@use "src/consts/colors" as colors;
+
 .colored-block {
   width: 100%;
   height: 100%;

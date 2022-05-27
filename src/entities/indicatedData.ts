@@ -1,5 +1,5 @@
 export interface IndicatedDataValue {
-    valueName: string,
+    valueName: string|null,
     valueMeasure: string,
     value: number,
     color: string
