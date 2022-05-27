@@ -6,13 +6,19 @@
     <status-indicator
         :indicated-data="indicatedData_2"
     ></status-indicator>
+    <status-indicator
+        :indicated-data="indicatedData_3"
+    ></status-indicator>
+    <status-indicator
+        :indicated-data="indicatedData_4"
+    ></status-indicator>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import StatusIndicator from "@/components/statusIndicator.vue";
-import {test_data_1, test_data_2} from "@/test_data/test_data";
+import {test_data_1, test_data_2, test_data_3, test_data_4} from "@/test_data/test_data";
 
 export default defineComponent({
   name: 'App',
@@ -21,7 +27,9 @@ export default defineComponent({
   },
   data: () => ({
     indicatedData_1:  test_data_1,
-    indicatedData_2:  test_data_2
+    indicatedData_2:  test_data_2,
+    indicatedData_3: test_data_3,
+    indicatedData_4: test_data_4,
   })
 });
 </script>

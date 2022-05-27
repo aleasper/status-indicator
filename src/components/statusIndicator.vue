@@ -20,14 +20,14 @@
         </colored-block>
         <span
             :class="['status-indicator__hint', 'status-indicator__hint_top',
-            {'status-indicator__hint_reflect': i+1 > indicatedDataPerPercent.length  / 2}]"
+            {'status-indicator__hint_reflect': i > indicatedDataPerPercent.length  / 2}]"
             :style="{'--font-color': data.color}"
         >
          {{data.valueName || noDataValueName}} — {{data.valuePercents}}%
         </span>
         <span
             :class="['status-indicator__hint', 'status-indicator__hint_bottom',
-            {'status-indicator__hint_reflect': i+1 > indicatedDataPerPercent.length  / 2}]"
+            {'status-indicator__hint_reflect': i > indicatedDataPerPercent.length  / 2}]"
         >
           {{data.value}} {{data.valueMeasure}}
         </span>
